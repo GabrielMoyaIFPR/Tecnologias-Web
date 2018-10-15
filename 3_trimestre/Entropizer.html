@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang='pt'>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <script src="js/jquery-3.3.1.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Estilo próprio desse site -->
+  <link href="css/customizado.css" rel="stylesheet">
+
+  <title>jQuery Entropizer</title>
+  <link rel="stylesheet" href="lib/demo/bootstrap.min.css" />
+
+  <link type="text/css" rel="stylesheet" href="dist/css/jquery-entropizer.min.css" />
+  <style>
+
+  #meter2 .entropizer-track {
+    background-color: #e8e8e8;
+    border-radius: 2px;
+    height: 10px;
+  }
+  #meter2 .entropizer-bar {
+    padding-top: 2px;
+    height: 10px;
+  }
+
+  h1, h2 {
+    text-align: center;
+
+  }
+
+  h4 {
+    text-align: justify;
+  }
+
+  hr {
+    border-top-width: 2px;
+    border-top-style: solid;
+    border-top-color: gray;
+  }
+
+
+
+</style>
+</head>
+
+<body>
+
+  <header>
+    <!-- Menu Fixo -->
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="#">Entropizer</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+        <form class="form-inline mt-2 mt-md-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+  </header>
+
+
+
+  <h1 class="mt-5 font-weight-bold">Plugin: Jquery Entropizer</h1><br>
+  <h3 class="font-weight-bold">O que é o Plugin?</h3>
+  <h4>Entropizer é um plugin jQuery para criar um campo de validação de senha, a onde você pode verificar o quão segura é sua senha.</h4>
+  <hr>
+  <h3 class="font-weight-bold">Como Funciona o Plugin?</h3>
+  <h4> No campo de validação de senha,você irá digitar a senha pretendida,e enquanto você digita a senha é possivel se verificar se sua senha é Muito forte (Verde),Forte (Verde claro),Moderada (Amarelo) ou Fraca (Vermelho).</h4>
+  <hr>
+
+  <h3 class="font-weight-bold">Exemplo do Plugin na Pratica:</h3>
+
+
+  <div id="top" class="container">
+    <div class="page-header">
+      <div class="panel-body">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label for="password2" class="col-md-2 control-label">Senha:</label>
+            <div class="col-md-10">
+              <input type="password" id="password2" class="form-control" placeholder="Digite uma senha" />
+            </div>
+          </div>
+          <div class="row">
+            <div id="meter2" class="col-md-10 col-md-offset-2"></div>
+          </div>
+        </form>
+        <hr />
+      </div>
+    </div>
+  </div>
+
+
+
+  <script src="jquery-entropizer-master/lib/jquery.js"></script>
+  <script src="jquery-entropizer-master/lib/entropizer.js"></script>
+  <script src="jquery-entropizer-master/dist/js/jquery-entropizer.min.js"></script>
+  <script src="bootstrap/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="bootstrap/bootstrap.min.css">
+
+  <script>
+  (function($) {
+    $('#meter2').entropizer({
+      target: '#password2',
+      update: function(data, ui) {
+        ui.bar.css({
+          'background-color': data.color,
+          'width': data.percent + '%'
+        });
+      }
+    });
+    var max = 80;
+    $('#meter3').entropizer({
+      create: function(container) {
+        var wrapper = $('<div>').addClass('progress progress-striped active').appendTo(container);
+        var bar = $('<div>').addClass('progress-bar')
+        .attr({
+          'role': 'progressbar',
+          'aria-valuemin': 0,
+          'aria-valuemax': max
+        })
+        .appendTo(wrapper);
+        return {
+          wrapper: wrapper,
+          bar: bar
+        };
+      },
+      update: function(data, ui) {
+        ui.bar.css({
+          'width': data.percent + '%'
+        })
+        .attr({
+          'aria-valuenow': data.entropy
+        })
+        .text(data.entropy.toFixed(0));
+        ui.bar[0].className = 'progress-bar progress-bar-' + data.suffix;
+      },
+      destroy: function(ui) {
+        ui.wrapper.remove();
+      }
+    });
+  })($);
+  </script>
+
+
+  <h3 class="font-weight-bold">Demonstração do Código e passo a passo:</h3><br>
+
+  <h4>1-Primeiramente você deve baixar o Diretório do plugin.</h4>
+  <a href="https://github.com/jreesuk/jquery-entropizer"  class="btn btn-secondary float-left bg-dark" target="_blank"> <h4>Acesse o Diretório</h4></a><br><br><hr>
+
+  <h4>2-Você deve procurar a pasta Test e procurar por Index.html.</h4>
+  <h4>-Dessa forma (jquery-entropizer/index.html).</h4><br><hr>
+  <h4>3-Você deverá Importar os seguintes links:</h4>
+
+  <pre style='color:#000000;background:#ffffff;'>    <span style='color:#7f0055; '>&lt;</span><span style='color:#000084; font-weight:bold; '>script</span> type=<span style='color:#0000ff; '>"text/javascript"</span> src=<span style='color:#0000ff; '>"jquery-entropizer-master/lib/jquery.js"</span><span style='color:#7f0055; '>></span><span style='color:#7f0055; '>&lt;/</span><span style='color:#000084; font-weight:bold; '>script</span><span style='color:#7f0055; '>></span>
+    <span style='color:#7f0055; '>&lt;</span><span style='color:#000084; font-weight:bold; '>script</span> type=<span style='color:#0000ff; '>"text/javascript"</span> src=<span style='color:#0000ff; '>"jquery-entropizer-master/lib/entropizer.js"</span><span style='color:#7f0055; '>></span><span style='color:#7f0055; '>&lt;/</span><span style='color:#000084; font-weight:bold; '>script</span><span style='color:#7f0055; '>></span>
+    <span style='color:#7f0055; '>&lt;</span><span style='color:#000084; font-weight:bold; '>script</span> type=<span style='color:#0000ff; '>"text/javascript"</span> src=<span style='color:#0000ff; '>"jquery-entropizer-master/dist/js/jquery-entropizer.min.js"</span><span style='color:#7f0055; '>></span><span style='color:#7f0055; '>&lt;/</span><span style='color:#000084; font-weight:bold; '>script</span><span style='color:#7f0055; '>></span>
+    <span style='color:#7f0055; '>&lt;</span><span style='color:#000084; font-weight:bold; '>script</span> src=<span style='color:#0000ff; '>"bootstrap/bootstrap.min.js"</span> charset=<span style='color:#0000ff; '>"utf-8"</span><span style='color:#7f0055; '>></span><span style='color:#7f0055; '>&lt;/</span><span style='color:#000084; font-weight:bold; '>script</span><span style='color:#7f0055; '>></span>
+    <span style='color:#7f0055; '>&lt;</span><span style='color:#000084; font-weight:bold; '>link</span> rel=<span style='color:#0000ff; '>"stylesheet"</span> href=<span style='color:#0000ff; '>"bootstrap/bootstrap.min.css"</span><span style='color:#7f0055; '>></span>
+    <span style='color:#7f0055; '>&lt;</span><span style='color:#000084; font-weight:bold; '>script</span> type=<span style='color:#0000ff; '>"text/javascript"</span><span style='color:#7f0055; '>></span>
+  </pre>
+  <hr>
+  <h4>4-Após Fazer isso vá no codigo do Index que você Abriu e copie o style dentro do Head:</h4>
+
+  <pre style='color:#000000;background:#f1f0f0;'> <span style='color:#a65700; '>&lt;</span><span style='color:#400000; font-weight:bold; '>head</span><span style='color:#a65700; '>></span>
+    <span style='color:#a65700; '>&lt;</span><span style='color:#400000; font-weight:bold; '>style</span><span style='color:#a65700; '>></span>
+
+    <span style='color:#806030; '>#</span>meter2 <span style='color:#806030; '>.</span>entropizer-track <span style='color:#806030; '>{</span>
+      <span style='color:#bb7977; font-weight:bold; '>background-color</span><span style='color:#806030; '>:</span> <span style='color:#8c0000; '>#</span><span style='color:#c00000; '>e8e8e8</span><span style='color:#806030; '>;</span>
+      <span style='color:#bb7977; font-weight:bold; '>border-radius</span><span style='color:#806030; '>:</span> <span style='color:#8c0000; '>2</span><span style='color:#006600; '>px</span><span style='color:#806030; '>;</span>
+      <span style='color:#bb7977; font-weight:bold; '>height</span><span style='color:#806030; '>:</span> <span style='color:#8c0000; '>10</span><span style='color:#006600; '>px</span><span style='color:#806030; '>;</span>
+      <span style='color:#806030; '>}</span>
+      <span style='color:#806030; '>#</span>meter2 <span style='color:#806030; '>.</span>entropizer-bar <span style='color:#806030; '>{</span>
+        <span style='color:#bb7977; font-weight:bold; '>padding-top</span><span style='color:#806030; '>:</span> <span style='color:#8c0000; '>2</span><span style='color:#006600; '>px</span><span style='color:#806030; '>;</span>
+        <span style='color:#bb7977; font-weight:bold; '>height</span><span style='color:#806030; '>:</span> <span style='color:#8c0000; '>10</span><span style='color:#006600; '>px</span><span style='color:#806030; '>;</span>
+        <span style='color:#806030; '>}</span>
+
+        <span style='color:#a65700; '>&lt;/</span><span style='color:#400000; font-weight:bold; '>style</span><span style='color:#a65700; '>></span>
+        <span style='color:#a65700; '>&lt;/</span><span style='color:#400000; font-weight:bold; '>head</span><span style='color:#a65700; '>></span>
+      </pre>
+
+      <h4>5-Você Deverá criar um Input como esse:</h4>
+      <pre style='color:#000000;background:#f1f0f0;'>  <span style='color:#806030; '>&lt;</span>div id<span style='color:#806030; '>=</span><span style='color:#e60000; '>"top"</span> <span style='color:#400000; font-weight:bold; '>class</span><span style='color:#806030; '>=</span><span style='color:#e60000; '>"container"</span><span style='color:#806030; '>></span>
+        <span style='color:#806030; '>&lt;</span>div <span style='color:#400000; font-weight:bold; '>class</span><span style='color:#806030; '>=</span><span style='color:#e60000; '>"page-header"</span><span style='color:#806030; '>></span>
+        <span style='color:#806030; '>&lt;</span>div <span style='color:#400000; font-weight:bold; '>class</span><span style='color:#806030; '>=</span><span style='color:#e60000; '>"panel-body"</span><span style='color:#806030; '>></span>
+        <span style='color:#806030; '>&lt;</span><span style='color:#400000; font-weight:bold; '>form</span> <span style='color:#400000; font-weight:bold; '>class</span><span style='color:#806030; '>=</span><span style='color:#e60000; '>"form-horizontal"</span><span style='color:#806030; '>></span>
+        <span style='color:#806030; '>&lt;</span>div <span style='color:#400000; font-weight:bold; '>class</span><span style='color:#806030; '>=</span><span style='color:#e60000; '>"form-group"</span><span style='color:#806030; '>></span>
+        <span style='color:#806030; '>&lt;</span>label <span style='color:#400000; font-weight:bold; '>for</span><span style='color:#806030; '>=</span><span style='color:#e60000; '>"password2"</span> <span style='color:#400000; font-weight:bold; '>class</span><span style='color:#806030; '>=</span><span style='color:#e60000; '>"col-md-2 control-label"</span><span style='color:#806030; '>></span>Senha<span style='color:#806030; '>:</span><span style='color:#806030; '>&lt;</span><span style='color:#806030; '>/</span>label<span style='color:#806030; '>></span>
+        <span style='color:#806030; '>&lt;</span>div <span style='color:#400000; font-weight:bold; '>class</span><span style='color:#806030; '>=</span><span style='color:#e60000; '>"col-md-10"</span><span style='color:#806030; '>></span>
+        <span style='color:#806030; '>&lt;</span><span style='color:#400000; font-weight:bold; '>input</span> type<span style='color:#806030; '>=</span><span style='color:#e60000; '>"password"</span> id<span style='color:#806030; '>=</span><span style='color:#e60000; '>"password2"</span> <span style='color:#400000; font-weight:bold; '>class</span><span style='color:#806030; '>=</span><span style='color:#e60000; '>"form-control"</span> placeholder<span style='color:#806030; '>=</span><span style='color:#e60000; '>"Digite uma senha"</span> <span style='color:#806030; '>/</span><span style='color:#806030; '>></span>
+        <span style='color:#806030; '>&lt;</span><span style='color:#806030; '>/</span>div<span style='color:#806030; '>></span>
+        <span style='color:#806030; '>&lt;</span><span style='color:#806030; '>/</span>div<span style='color:#806030; '>></span>
+        <span style='color:#806030; '>&lt;</span>div <span style='color:#400000; font-weight:bold; '>class</span><span style='color:#806030; '>=</span><span style='color:#e60000; '>"row"</span><span style='color:#806030; '>></span>
+        <span style='color:#806030; '>&lt;</span>div id<span style='color:#806030; '>=</span><span style='color:#e60000; '>"meter2"</span> <span style='color:#400000; font-weight:bold; '>class</span><span style='color:#806030; '>=</span><span style='color:#e60000; '>"col-md-10 col-md-offset-2"</span><span style='color:#806030; '>></span><span style='color:#806030; '>&lt;</span><span style='color:#806030; '>/</span>div<span style='color:#806030; '>></span>
+        <span style='color:#806030; '>&lt;</span><span style='color:#806030; '>/</span>div<span style='color:#806030; '>></span>
+        <span style='color:#806030; '>&lt;</span><span style='color:#806030; '>/</span><span style='color:#400000; font-weight:bold; '>form</span><span style='color:#806030; '>></span>
+        <span style='color:#806030; '>&lt;</span>hr <span style='color:#806030; '>/</span><span style='color:#806030; '>></span>
+        <span style='color:#806030; '>&lt;</span><span style='color:#806030; '>/</span>div<span style='color:#806030; '>></span>
+        <span style='color:#806030; '>&lt;</span><span style='color:#806030; '>/</span>div<span style='color:#806030; '>></span>
+        <span style='color:#806030; '>&lt;</span><span style='color:#806030; '>/</span>div<span style='color:#806030; '>></span>
+      </pre><hr>
+
+      <h4>6-Após isso Cole o código fonte do Entropizer dentro do body do seu Html:</h4>
+      <pre style='color:#000000;background:#f1f0f0;'><span style='color:#806030; '>&lt;</span>script<span style='color:#806030; '>></span>
+          <span style='color:#806030; '>(</span><span style='color:#400000; font-weight:bold; '>function</span><span style='color:#806030; '>(</span>$<span style='color:#806030; '>)</span> {
+            $<span style='color:#806030; '>(</span><span style='color:#c34e00; '>'#meter2').entropizer({</span>
+              target<span style='color:#806030; '>:</span> <span style='color:#c34e00; '>'#password2',</span>
+              update<span style='color:#806030; '>:</span> <span style='color:#400000; font-weight:bold; '>function</span><span style='color:#806030; '>(</span>data<span style='color:#806030; '>,</span> ui<span style='color:#806030; '>)</span> {
+                ui<span style='color:#8c0000; '>.</span>bar<span style='color:#8c0000; '>.</span>css<span style='color:#806030; '>(</span>{
+                  <span style='color:#c34e00; '>'background-color': data.color,</span>
+                  <span style='color:#c34e00; '>'width': data.percent + '%'</span>
+                }<span style='color:#806030; '>)</span><span style='color:#806030; '>;</span>
+              }
+            }<span style='color:#806030; '>)</span><span style='color:#806030; '>;</span>
+            var max <span style='color:#806030; '>=</span> <span style='color:#8c0000; '>80</span><span style='color:#806030; '>;</span>
+            $<span style='color:#806030; '>(</span><span style='color:#c34e00; '>'#meter3').entropizer({</span>
+              create<span style='color:#806030; '>:</span> <span style='color:#400000; font-weight:bold; '>function</span><span style='color:#806030; '>(</span>container<span style='color:#806030; '>)</span> {
+                var wrapper <span style='color:#806030; '>=</span> $<span style='color:#806030; '>(</span><span style='color:#c34e00; '>'&lt;div>').addClass('progress progress-striped active').appendTo(container);</span>
+                var bar <span style='color:#806030; '>=</span> $<span style='color:#806030; '>(</span><span style='color:#c34e00; '>'&lt;div>').addClass('progress-bar')</span>
+                <span style='color:#806030; '>.</span>attr<span style='color:#806030; '>(</span>{
+                  <span style='color:#c34e00; '>'role': 'progressbar',</span>
+                  <span style='color:#c34e00; '>'aria-valuemin': 0,</span>
+                  <span style='color:#c34e00; '>'aria-valuemax': max</span>
+                }<span style='color:#806030; '>)</span>
+                <span style='color:#806030; '>.</span>appendTo<span style='color:#806030; '>(</span>wrapper<span style='color:#806030; '>)</span><span style='color:#806030; '>;</span>
+                <span style='color:#400000; font-weight:bold; '>return</span> {
+                  wrapper<span style='color:#806030; '>:</span> wrapper<span style='color:#806030; '>,</span>
+                  bar<span style='color:#806030; '>:</span> bar
+                }<span style='color:#806030; '>;</span>
+              }<span style='color:#806030; '>,</span>
+              update<span style='color:#806030; '>:</span> <span style='color:#400000; font-weight:bold; '>function</span><span style='color:#806030; '>(</span>data<span style='color:#806030; '>,</span> ui<span style='color:#806030; '>)</span> {
+                ui<span style='color:#8c0000; '>.</span>bar<span style='color:#8c0000; '>.</span>css<span style='color:#806030; '>(</span>{
+                  <span style='color:#c34e00; '>'width': data.percent + '%'</span>
+                }<span style='color:#806030; '>)</span>
+                <span style='color:#806030; '>.</span>attr<span style='color:#806030; '>(</span>{
+                  <span style='color:#c34e00; '>'aria-valuenow': data.entropy</span>
+                }<span style='color:#806030; '>)</span>
+                <span style='color:#806030; '>.</span>text<span style='color:#806030; '>(</span>data<span style='color:#8c0000; '>.</span>entropy<span style='color:#8c0000; '>.</span>toFixed<span style='color:#806030; '>(</span><span style='color:#8c0000; '>0</span><span style='color:#806030; '>)</span><span style='color:#806030; '>)</span><span style='color:#806030; '>;</span>
+                ui<span style='color:#8c0000; '>.</span>bar<span style='color:#806030; '>[</span><span style='color:#8c0000; '>0</span><span style='color:#806030; '>]</span><span style='color:#806030; '>.</span>className <span style='color:#806030; '>=</span> <span style='color:#c34e00; '>'progress-bar progress-bar-' + data.suffix;</span>
+              }<span style='color:#806030; '>,</span>
+              destroy<span style='color:#806030; '>:</span> <span style='color:#400000; font-weight:bold; '>function</span><span style='color:#806030; '>(</span>ui<span style='color:#806030; '>)</span> {
+                ui<span style='color:#8c0000; '>.</span>wrapper<span style='color:#8c0000; '>.</span>remove<span style='color:#806030; '>(</span><span style='color:#806030; '>)</span><span style='color:#806030; '>;</span>
+              }
+            }<span style='color:#806030; '>)</span><span style='color:#806030; '>;</span>
+          }<span style='color:#806030; '>)</span><span style='color:#806030; '>(</span>$<span style='color:#806030; '>)</span><span style='color:#806030; '>;</span>
+          <span style='color:#806030; '>&lt;</span><span style='color:#806030; '>/</span>script<span style='color:#806030; '>></span>
+        </pre>
+        <h4> Após isso Seu programa deverá funcionar como no exemplo.</h4>
+        <hr>
+
+        </body>
+        </html>
